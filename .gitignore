@@ -1,4 +1,54 @@
+# =========================
+# NodeJS
+# =========================
 node_modules/
-*.pkl
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Python
+# =========================
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# =========================
+# Machine Learning / Dataset
+# =========================
+*.xlsx
+*.csv
+*.zip
+~$*.xlsx
+
+# =========================
+# Environment variables
+# =========================
 .env
+.env.local
+.env.development
+.env.production
+
+# =========================
+# Build output
+# =========================
+dist/
+build/
+
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log

@@ -1,15 +1,13 @@
 import os
 import sys
-import pickle
+import json
+import joblib
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # LOAD TF-IDF
-with open(os.path.join(BASE_DIR, "tfidf_vectorizer.pkl"), "rb") as f:
-    vectorizer = pickle.load(f)
-
-with open(os.path.join(BASE_DIR, "fake_news_model.pkl"), "rb") as f:
-    model = pickle.load(f)
+vectorizer = joblib.load(os.path.join(BASE_DIR, "tfidf_vectorizer.pkl"))
+model = joblib.load(os.path.join(BASE_DIR, "fake_news_model.pkl"))
 
 # Nhận text từ NodeJS
 text = sys.argv[1]
@@ -17,11 +15,19 @@ text = sys.argv[1]
 # Transform text
 vec = vectorizer.transform([text])
 
-# Predict
+# Predict label
 prediction = model.predict(vec)[0]
 
-# Trả kết quả cho NodeJS
-if prediction == 1:
-    print("REAL NEWS")
-else:
-    print("FAKE NEWS")
+# Predict probability (QUAN TRỌNG)
+probability = model.predict_proba(vec)[0][prediction]
+
+# Mapping
+label = "REAL NEWS" if prediction == 1 else "FAKE NEWS"
+
+# Trả JSON cho NodeJS
+result = {
+    "label": label,
+    "probability": round(float(probability), 4)
+}
+
+print(json.dumps(result))

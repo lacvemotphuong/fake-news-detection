@@ -1,9 +1,13 @@
 const express = require("express");
 const { spawn } = require("child_process");
+const path = require("path");
 const Prediction = require("../models/Prediction");
 
 const router = express.Router();
 
+/**
+ * POST /api/predict
+ */
 router.post("/", async (req, res) => {
   const { text } = req.body;
 
@@ -11,26 +15,61 @@ router.post("/", async (req, res) => {
     return res.status(400).json({ error: "Text is required" });
   }
 
-  const python = spawn("python", ["python/predict.py", text]);
+  const scriptPath = path.join(__dirname, "../python/predict.py");
+  const python = spawn("python", [scriptPath, text]);
 
-  python.stdout.on("data", async (data) => {
-    const result = data.toString().trim();
+  let output = "";
+  let errorOutput = "";
 
-    const saved = await Prediction.create({
-      text,
-      result
-    });
-
-    res.json({
-      result,
-      id: saved._id
-    });
+  python.stdout.on("data", (data) => {
+    output += data.toString();
   });
 
   python.stderr.on("data", (err) => {
-    console.error(err.toString());
-    res.status(500).json({ error: "Python error" });
+    errorOutput += err.toString();
   });
+
+  python.on("close", async () => {
+    if (errorOutput) {
+      console.error(errorOutput);
+      return res.status(500).json({ error: "Python error" });
+    }
+
+    try {
+      const result = JSON.parse(output);
+
+      const saved = await Prediction.create({
+        text,
+        result: result.label,
+        probability: result.probability,
+      });
+
+      res.json({
+        id: saved._id,
+        ...result,
+      });
+    } catch (err) {
+      res.status(500).json({
+        error: "Invalid Python output",
+        raw: output,
+      });
+    }
+  });
+});
+
+/**
+ * GET /api/predict/history
+ */
+router.get("/history", async (req, res) => {
+  try {
+    const history = await Prediction.find()
+      .sort({ createdAt: -1 })
+      .limit(20);
+
+    res.json(history);
+  } catch (err) {
+    res.status(500).json({ error: "Cannot get history" });
+  }
 });
 
 module.exports = router;

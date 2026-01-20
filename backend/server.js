@@ -6,8 +6,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
-
 // Kết nối MongoDB
 mongoose.connect("mongodb://localhost:27017/fake_news_db")
   .then(() => console.log(" MongoDB connected"))
