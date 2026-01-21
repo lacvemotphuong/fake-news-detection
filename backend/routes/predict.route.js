@@ -11,22 +11,28 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   const { text } = req.body;
 
-  if (!text) {
-    return res.status(400).json({ error: "Text is required" });
+  // Validate input
+  if (!text || text.trim().length < 20) {
+    return res.status(400).json({
+      error: "Text too short",
+    });
   }
 
   const scriptPath = path.join(__dirname, "../python/predict.py");
-  const python = spawn("python", [scriptPath, text]);
+  const python = spawn("python", [scriptPath]);
 
   let output = "";
   let errorOutput = "";
+
+  python.stdin.write(text);
+  python.stdin.end();
 
   python.stdout.on("data", (data) => {
     output += data.toString();
   });
 
-  python.stderr.on("data", (err) => {
-    errorOutput += err.toString();
+  python.stderr.on("data", (data) => {
+    errorOutput += data.toString();
   });
 
   python.on("close", async () => {
@@ -36,18 +42,18 @@ router.post("/", async (req, res) => {
     }
 
     try {
-      const result = JSON.parse(output);
+      const result = JSON.parse(output.trim());
 
-      const saved = await Prediction.create({
-        text,
-        result: result.label,
-        probability: result.probability,
-      });
+      // Validate python output
+      if (
+        !result.label ||
+        typeof result.fake_probability !== "number" ||
+        typeof result.real_probability !== "number"
+      ) {
+        throw new Error("Invalid model output");
+      }
 
-      res.json({
-        id: saved._id,
-        ...result,
-      });
+      res.json(result);
     } catch (err) {
       res.status(500).json({
         error: "Invalid Python output",
@@ -56,6 +62,7 @@ router.post("/", async (req, res) => {
     }
   });
 });
+
 
 /**
  * GET /api/predict/history

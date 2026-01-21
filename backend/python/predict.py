@@ -3,31 +3,47 @@ import sys
 import json
 import joblib
 
+# PATHS
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# LOAD TF-IDF
+# LOAD MODEL + VECTORIZER
 vectorizer = joblib.load(os.path.join(BASE_DIR, "tfidf_vectorizer.pkl"))
 model = joblib.load(os.path.join(BASE_DIR, "fake_news_model.pkl"))
 
-# Nhận text từ NodeJS
-text = sys.argv[1]
+# READ TEXT FROM STDIN (NODEJS)
+text = sys.stdin.read().strip()
 
-# Transform text
+if not text:
+    print(json.dumps({
+        "label": "UNKNOWN",
+        "fake_probability": 0.0,
+        "real_probability": 0.0
+    }))
+    sys.exit(0)
+
+# TRANSFORM
 vec = vectorizer.transform([text])
 
-# Predict label
-prediction = model.predict(vec)[0]
+# PREDICT
+proba = model.predict_proba(vec)[0]
+fake_prob = float(proba[0])
+real_prob = float(proba[1])
 
-# Predict probability (QUAN TRỌNG)
-probability = model.predict_proba(vec)[0][prediction]
+# DECISION LOGIC 
+THRESHOLD = 0.6
 
-# Mapping
-label = "REAL NEWS" if prediction == 1 else "FAKE NEWS"
+if fake_prob >= THRESHOLD:
+    label = "FAKE"
+elif real_prob >= THRESHOLD:
+    label = "REAL"
+else:
+    label = "UNCERTAIN"
 
-# Trả JSON cho NodeJS
+# RETURN JSON (ONLY JSON)
 result = {
     "label": label,
-    "probability": round(float(probability), 4)
+    "fake_probability": round(fake_prob, 4),
+    "real_probability": round(real_prob, 4)
 }
 
 print(json.dumps(result))

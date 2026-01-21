@@ -4,12 +4,17 @@ export default function Home() {
   const [text, setText] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const predict = async () => {
-    if (!text.trim()) return;
+    if (text.trim().length < 20) {
+      setError("Nội dung quá ngắn (tối thiểu 20 ký tự)");
+      return;
+    }
 
     setLoading(true);
     setResult(null);
+    setError("");
 
     try {
       const res = await fetch("http://localhost:5000/api/predict", {
@@ -17,143 +22,102 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
       });
+
       const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Lỗi server");
+      }
+
       setResult(data);
-    } catch {
-      alert("Không kết nối được backend");
+    } catch (err) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 px-6 py-10">
-      <div className="max-w-6xl mx-auto space-y-10">
+  const fakePercent = result
+    ? Math.round(result.fake_probability * 100)
+    : 0;
 
-        {/* HEADER */}
-        <div className="rounded-3xl p-10 bg-white/70 backdrop-blur shadow-sm flex justify-between items-center">
-          <div>
-            <h1 className="text-4xl font-extrabold text-slate-800">
-              Fake News Detection
-            </h1>
-            <p className="mt-3 text-slate-600 max-w-xl">
-              Hệ thống phân tích và đánh giá độ tin cậy của tin tức bằng trí tuệ nhân tạo
-            </p>
+  const realPercent = result
+    ? Math.round(result.real_probability * 100)
+    : 0;
+
+  return (
+    <div className="min-h-screen bg-slate-100 px-6 py-10">
+      <div className="max-w-5xl mx-auto space-y-8">
+
+        {/* INPUT */}
+        <div className="bg-white p-8 rounded-2xl shadow">
+          <h2 className="text-xl font-bold mb-4">🔍 Tra cứu tin tức</h2>
+
+          <textarea
+            rows="6"
+            className="w-full border rounded-xl p-4"
+            placeholder="Nhập nội dung bài báo..."
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+
+          {error && (
+            <p className="text-red-600 mt-2 font-semibold">{error}</p>
+          )}
+
+          <div className="text-right mt-4">
+            <button
+              onClick={predict}
+              disabled={loading}
+              className="bg-indigo-600 text-white px-6 py-2 rounded-xl"
+            >
+              {loading ? "Đang phân tích..." : "Dự đoán"}
+            </button>
           </div>
-          <div className="hidden md:block text-7xl opacity-40">🤖</div>
         </div>
 
-        {/* MAIN */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-          {/* INPUT */}
-          <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm p-8 space-y-6">
-            <h2 className="text-xl font-semibold text-slate-700 flex items-center gap-2">
-              🔍 Tra cứu tin tức
+        {/* RESULT */}
+        {result && (
+          <div className="bg-yellow-50 p-8 rounded-2xl shadow space-y-6">
+            <h2
+              className={`text-3xl font-extrabold text-center ${
+                result.label === "FAKE"
+                  ? "text-red-600"
+                  : "text-green-600"
+              }`}
+            >
+              {result.label === "FAKE" ? "FAKE NEWS" : "REAL NEWS"}
             </h2>
 
-            <textarea
-              rows="9"
-              className="w-full rounded-2xl border border-slate-300 p-5
-              focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
-              placeholder="Nhập hoặc dán nội dung bài báo cần kiểm tra..."
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
+            {/* Fake */}
+            <div>
+              <div className="flex justify-between font-bold text-red-600">
+                <span>Fake</span>
+                <span>{fakePercent}%</span>
+              </div>
+              <div className="h-3 bg-red-200 rounded-full">
+                <div
+                  className="h-3 bg-red-500 rounded-full"
+                  style={{ width: `${fakePercent}%` }}
+                />
+              </div>
+            </div>
 
-            <div className="flex justify-end">
-              <button
-                onClick={predict}
-                disabled={loading}
-                className={`px-8 py-3 rounded-2xl font-semibold transition-all duration-200
-                ${
-                  loading
-                    ? "bg-slate-400 cursor-not-allowed text-white"
-                    : "bg-indigo-600 hover:bg-indigo-700 text-white shadow-md"
-                }`}
-              >
-                {loading ? "Đang phân tích..." : "Dự đoán"}
-              </button>
+            {/* Real */}
+            <div>
+              <div className="flex justify-between font-bold text-green-600">
+                <span>Real</span>
+                <span>{realPercent}%</span>
+              </div>
+              <div className="h-3 bg-green-200 rounded-full">
+                <div
+                  className="h-3 bg-green-500 rounded-full"
+                  style={{ width: `${realPercent}%` }}
+                />
+              </div>
             </div>
           </div>
-
-          {/* RESULT */}
-          <div className="bg-white rounded-3xl shadow-sm p-8 space-y-6">
-            <h2 className="text-xl font-semibold text-slate-700 flex items-center gap-2">
-              📊 Kết quả
-            </h2>
-
-            {!result && (
-              <div className="text-slate-400 text-sm text-center py-16 border-2 border-dashed rounded-2xl">
-                Chưa có dữ liệu phân tích
-              </div>
-            )}
-
-            {result && (
-              <div
-                className={`rounded-2xl p-6 text-center space-y-4
-                ${
-                  result.result === "FAKE"
-                    ? "bg-red-50 border border-red-200"
-                    : "bg-green-50 border border-green-200"
-                }`}
-              >
-                <span
-                  className={`inline-block px-4 py-1 rounded-full text-sm font-semibold
-                  ${
-                    result.result === "FAKE"
-                      ? "bg-red-100 text-red-700"
-                      : "bg-green-100 text-green-700"
-                  }`}
-                >
-                  {result.result}
-                </span>
-
-                <h3
-                  className={`text-4xl font-extrabold
-                  ${
-                    result.result === "FAKE"
-                      ? "text-red-600"
-                      : "text-green-600"
-                  }`}
-                >
-                  {result.result === "FAKE" ? "FAKE NEWS" : "REAL NEWS"}
-                </h3>
-
-                {result.probability !== undefined && (
-                  <div className="space-y-2">
-                    <p className="text-slate-600 text-sm">
-                      Độ tin cậy:{" "}
-                      <span className="font-semibold">
-                        {Math.round(result.probability * 100)}%
-                      </span>
-                    </p>
-
-                    {/* Progress bar */}
-                    <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
-                      <div
-                        className={`h-full transition-all duration-700
-                        ${
-                          result.result === "FAKE"
-                            ? "bg-red-500"
-                            : "bg-green-500"
-                        }`}
-                        style={{
-                          width: `${Math.round(result.probability * 100)}%`,
-                        }}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* FOOTER */}
-        <div className="text-center text-sm text-slate-400 pt-6">
-          © 2026 Fake News Detection – AI Dashboard
-        </div>
+        )}
       </div>
     </div>
   );
