@@ -24,6 +24,14 @@ env/
 *.csv
 *.zip
 ~$*.xlsx
+# model checkpoints / tokenizers / data files
+*.pkl
+*.safetensors
+*.bin
+*.json
+*.txt
+phobert_fake_news_final/
+backend/python/**/phobert_fake_news_final/
 
 # =========================
 # Environment variables
