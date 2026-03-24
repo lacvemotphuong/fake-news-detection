@@ -1,4 +1,4 @@
-import sys
+import sys 
 import json
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
@@ -8,15 +8,14 @@ import os
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# global variables to hold models, vectorizer, dataset, tfidf matrix
+# biến toàn cục để lưu model, vectorizer, dataset và tfidf matrix, tránh load lại nhiều lần khi predict nhiều lần
 tfidf_vectorizer = None
-tfidf_model = None
+tfidf_models = {}   # ✅ sửa: lưu nhiều model
 tokenizer = None
 phobert_model = None
 dataset = None
@@ -24,24 +23,37 @@ tfidf_matrix = None
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# load tfidf model va vectorizer, neu co loi thi bo qua phan nay
+# load tfidf model va vectorizer
 try:
 
-    vec_path = os.path.join(BASE_DIR, "tfidf_vectorizer.pkl")
-    model_path = os.path.join(BASE_DIR, "tfidf_fake_news_model.pkl")
+    vec_path = os.path.join(BASE_DIR, "vectorizer.pkl")
 
-    if os.path.exists(vec_path) and os.path.exists(model_path):
+    if os.path.exists(vec_path):
 
         tfidf_vectorizer = joblib.load(vec_path)
-        tfidf_model = joblib.load(model_path)
+
+        # load nhiều model
+        model_files = {
+            "lr": "model_lr.pkl",
+            "nb": "model_nb.pkl",
+            "svm": "model_svm.pkl",
+            "rf": "model_rf.pkl"
+        }
+
+        for key, file_name in model_files.items():
+            path = os.path.join(BASE_DIR, file_name)
+            if os.path.exists(path):
+                tfidf_models[key] = joblib.load(path)
+            else:
+                print(f"{file_name} not found", file=sys.stderr)
 
     else:
-        print("TFIDF model files not found", file=sys.stderr)
+        print("TFIDF vectorizer not found", file=sys.stderr)
 
 except Exception as e:
     print(f"TFIDF load error: {e}", file=sys.stderr)
 
-# load dataset va tinh tfidf matrix de tim link lien quan nhanh hon, neu co loi thi bo qua phan nay
+# load dataset va tinh tfidf matrix de tim link lien quan nhanh hon
 try:
 
     fake_path = os.path.join(BASE_DIR, "all_fake_news.csv")
@@ -66,7 +78,6 @@ try:
 except Exception as e:
     print(f"Dataset load error: {e}", file=sys.stderr)
 
-
 # load phobert model 
 try:
 
@@ -86,8 +97,7 @@ try:
 except Exception as e:
     print(f"PhoBERT load error: {e}", file=sys.stderr)
 
-
-# ham tien xu ly text don gian, loai bo ky tu dac biet, chuyen ve thuong, xoa khoang trang thua
+# ham tien xu ly text don gian
 def clean_text(text):
 
     if not isinstance(text, str):
@@ -98,8 +108,7 @@ def clean_text(text):
 
     return text
 
-
-# tìm link liên quan dựa trên cosine similarity của tfidf, trả về top_k link nếu có
+# tìm link liên quan
 def find_related_links(text, top_k=3):
 
     if dataset is None or tfidf_matrix is None:
@@ -108,15 +117,12 @@ def find_related_links(text, top_k=3):
     try:
 
         vec = tfidf_vectorizer.transform([text])
-
         sim = cosine_similarity(vec, tfidf_matrix)
-
         idx = sim.argsort()[0][-top_k:][::-1]
 
         links = []
 
         for i in idx:
-
             if "url" in dataset.columns:
                 links.append(dataset.iloc[i]["url"])
 
@@ -125,39 +131,45 @@ def find_related_links(text, top_k=3):
     except:
         return []
 
-# predict tfidf du doan xem co phai tin gia hay khong, tra ve ket qua va xac suat
+# predict tfidf nhiều model
 def predict_tfidf(text):
 
-    if tfidf_model is None or tfidf_vectorizer is None:
-        return {"error": "TFIDF model not loaded"}
+    if not tfidf_models or tfidf_vectorizer is None:
+        return {"error": "TFIDF models not loaded"}
+
+    results = {}
 
     try:
 
         cleaned = clean_text(text)
-
         vec = tfidf_vectorizer.transform([cleaned])
 
-        pred = int(tfidf_model.predict(vec)[0])
+        for name, model in tfidf_models.items():
 
-        prob = float(tfidf_model.predict_proba(vec)[0][1])
+            pred = int(model.predict(vec)[0])
 
-        return {
-            "prediction": pred,
-            "probability_fake": prob
-        }
+            if hasattr(model, "predict_proba"):
+                prob = float(model.predict_proba(vec)[0][1])
+            else:
+                prob = None
+
+            results[name] = {
+                "prediction": pred,
+                "probability_fake": prob
+            }
+
+        return results
 
     except Exception as e:
         return {"error": str(e)}
 
-
-# predict phobert du doan xem co phai tin gia hay khong, tra ve ket qua va xac suat
+# predict phobert
 def predict_phobert(text):
 
     if phobert_model is None or tokenizer is None:
         return {"error": "PhoBERT model not loaded"}
 
     try:
-
         inputs = tokenizer(
             text,
             return_tensors="pt",
@@ -165,7 +177,6 @@ def predict_phobert(text):
             padding=True,
             max_length=256
         )
-
         inputs = {k: v.to(device) for k, v in inputs.items()}
 
         with torch.no_grad():
@@ -174,7 +185,6 @@ def predict_phobert(text):
         probs = torch.softmax(outputs.logits, dim=1)
 
         pred = int(torch.argmax(probs, dim=1).item())
-
         prob_fake = float(probs[0][1].item())
 
         return {
@@ -185,8 +195,7 @@ def predict_phobert(text):
     except Exception as e:
         return {"error": str(e)}
 
-
-# ham chinh de chay tu command line 
+# main
 if __name__ == "__main__":
 
     try:
@@ -207,7 +216,6 @@ if __name__ == "__main__":
         if model_type in ["phobert", "both"]:
             result["phobert"] = predict_phobert(text)
 
-        # tìm link liên quan
         result["related_links"] = find_related_links(text)
 
         print(json.dumps(result, ensure_ascii=False))

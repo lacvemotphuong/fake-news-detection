@@ -51,23 +51,34 @@ router.post("/", async (req, res) => {
       }
 
       // Chuẩn bị dữ liệu để lưu vào MongoDB
-      // Giả sử bạn muốn lưu kết quả PhoBERT làm chính (nếu có), hoặc TF-IDF
       let finalLabel = "REAL";
       let finalProbFake = 0;
       let usedModel = model_type;
 
+      // Ưu tiên PhoBERT nếu có
       if (model_type === "both" && result.phobert) {
         finalLabel = result.phobert.prediction === 1 ? "FAKE" : "REAL";
         finalProbFake = result.phobert.probability_fake;
         usedModel = "phobert";
-      } else if (result.tfidf) {
-        finalLabel = result.tfidf.prediction === 1 ? "FAKE" : "REAL";
-        finalProbFake = result.tfidf.probability_fake;
-        usedModel = "tfidf";
-      } else if (result.phobert) {
-        finalLabel = result.phobert.prediction === 1 ? "FAKE" : "REAL";
-        finalProbFake = result.phobert.probability_fake;
-        usedModel = "phobert";
+      } 
+      // Nếu chỉ TF-IDF → chọn model tốt nhất
+      else if (result.tfidf) {
+
+        let bestModel = null;
+        let bestProb = -1;
+
+        for (const [name, value] of Object.entries(result.tfidf)) {
+          if (value.probability_fake !== null && value.probability_fake > bestProb) {
+            bestProb = value.probability_fake;
+            bestModel = { name, ...value };
+          }
+        }
+
+        if (bestModel) {
+          finalLabel = bestModel.prediction === 1 ? "FAKE" : "REAL";
+          finalProbFake = bestModel.probability_fake;
+          usedModel = bestModel.name; // lr / nb / svm / rf
+        }
       }
 
       // Lưu vào MongoDB

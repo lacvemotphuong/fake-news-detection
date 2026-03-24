@@ -25,8 +25,8 @@ mongoose
 // Routes
 app.use("/api/predict", require("./routes/predict.route"));
 app.use("/api/auth", require("./routes/auth.route"));
-app.use("/api/history", require("./routes/user.route"));
-app.use("/api/profile", require("./routes/user.route"));
+app.use("/api/user", require("./routes/user.route"));
+app.use("/api/history", require("./routes/history.route"));
 
 
 // Chỉ mount /api/user nếu file tồn tại (tránh lỗi khi chưa có)
