@@ -25,10 +25,12 @@ router.post("/", async (req, res) => {
   let output = "";
   let errorOutput = "";
 
+  // lưu kết quả từ Python
   python.stdout.on("data", (data) => {
     output += data.toString();
   });
 
+  // lưu lỗi từ Python khi chạy lỗi 
   python.stderr.on("data", (data) => {
     errorOutput += data.toString();
   });
@@ -110,18 +112,18 @@ router.post("/", async (req, res) => {
   });
 });
 
-// GET /history - Lấy lịch sử dự đoán (20 bản ghi gần nhất)
-router.get("/history", async (req, res) => {
-  try {
-    const history = await Prediction.find()
-      .sort({ createdAt: -1 })
-      .limit(20);
+// // GET /history - Lấy lịch sử dự đoán (20 bản ghi gần nhất)
+// router.get("/history", async (req, res) => {
+//   try {
+//     const history = await Prediction.find()
+//       .sort({ createdAt: -1 })
+//       .limit(20);
 
-    res.json(history);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Không lấy được lịch sử" });
-  }
-});
+//     res.json(history);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Không lấy được lịch sử" });
+//   }
+// });
 
 module.exports = router;
