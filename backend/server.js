@@ -1,10 +1,10 @@
 // server.js
-require('dotenv').config(); // phải ở đầu file
+require('dotenv').config(); // đọc các biến môi trường từ .env
 
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const path = require("path"); // nếu sau này cần serve static files
+const express = require("express"); // Express framework
+const mongoose = require("mongoose"); // Mongoose for MongoDB
+const cors = require("cors"); // Middleware for handling CORS (nhận request từ frontend)
+const path = require("path"); // Module xử lý đường dẫn
 
 const app = express();
 

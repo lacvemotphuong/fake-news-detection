@@ -69,16 +69,18 @@ export default function Navbar() {
           {/* MENU BUTTON */}
           <button
             onClick={() => setOpen(true)}
-            className="w-10 h-10 md:w-11 md:h-11 bg-[#f5f0e8] rounded-xl shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] hover:shadow-[inset_3px_3px_6px_#d9d0c4,_inset_-3px_-3px_6px_#ffffff] transition-all duration-200 text-xl text-[#5c4b3a] font-bold flex items-center justify-center"
+            className="w-10 h-10 md:w-11 md:h-11 bg-[#f5f0e8] rounded-xl shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] hover:shadow-[inset_3px_3px_6px_#d9d0c4,_inset_-3px_-3px_6px_#ffffff] shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] hover:shadow-[inset_3px_3px_6px_#d9d0c4,_inset_-3px_-3px_6px_#ffffff] transition-all duration-200 text-[#5c4b3a] flex items-center justify-center"
           >
-            ☰
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+              <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/>
+            </svg>
           </button>
 
           {/* LOGO */}
           <div className="hidden sm:block">
-            <h1 className="text-[#5c4b3a] text-xl md:text-2xl font-bold tracking-tight">
+            {/* <h1 className="text-[#5c4b3a] text-xl md:text-2xl font-bold tracking-tight">
               📰 Fake News Detector
-            </h1>
+            </h1> */}
           </div>
         </div>
 
@@ -86,21 +88,30 @@ export default function Navbar() {
         <div className="hidden md:flex gap-3 bg-[#f5f0e8] p-1 rounded-2xl shadow-[inset_2px_2px_5px_#d9d0c4,_inset_-2px_-2px_5px_#ffffff] mr-2">
           <Link 
             to="/" 
-            className="px-5 py-2 rounded-xl text-[#5c4b3a] font-medium hover:bg-[#f5f0e8] hover:shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] transition-all duration-200"
+            className="px-5 py-2 rounded-xl text-[#5c4b3a] font-medium hover:bg-[#f5f0e8] hover:shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] transition-all duration-200 flex items-center gap-2"
           >
-            🏠 Trang chủ
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            Trang chủ
           </Link>
           <Link 
             to="/profile" 
-            className="px-5 py-2 rounded-xl text-[#5c4b3a] font-medium hover:bg-[#f5f0e8] hover:shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] transition-all duration-200"
+            className="px-5 py-2 rounded-xl text-[#5c4b3a] font-medium hover:bg-[#f5f0e8] hover:shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] transition-all duration-200 flex items-center gap-2"
           >
-            👤 Profile
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+              <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+            </svg>
+            Profile
           </Link>
           <Link 
             to="/history" 
-            className="px-5 py-2 rounded-xl text-[#5c4b3a] font-medium hover:bg-[#f5f0e8] hover:shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] transition-all duration-200"
+            className="px-5 py-2 rounded-xl text-[#5c4b3a] font-medium hover:bg-[#f5f0e8] transition-all duration-200 flex items-center gap-2"
           >
-            📜 Lịch sử
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+              <path d="M6 2h9a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v13h9V4H6zm11 0h2v6h-2V4zm0 8h2v2h-2v-2z"/>
+            </svg>
+            Lịch sử
           </Link>
         </div>
 
@@ -111,13 +122,13 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="px-5 py-2 rounded-xl bg-[#f5f0e8] text-[#5c4b3a] font-medium shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] hover:shadow-[inset_4px_4px_8px_#d9d0c4,_inset_-4px_-4px_8px_#ffffff] transition-all duration-200"
+                className="px-5 py-2 rounded-xl bg-[#f5f0e8] text-[#5c4b3a] font-medium transition-all duration-200"
               >
                 Đăng nhập
               </Link>
               <Link
                 to="/register"
-                className="px-5 py-2 rounded-xl bg-[#5c4b3a] text-white font-medium shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] hover:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.2)] transition-all duration-200"
+                className="px-5 py-2 rounded-xl bg-[#5c4b3a] text-white font-medium transition-all duration-200"
               >
                 Đăng ký
               </Link>
@@ -125,8 +136,8 @@ export default function Navbar() {
           ) : (
             <>
               {/* USER INFO */}
-              <div className="flex items-center gap-3 bg-[#f5f0e8] px-3 py-1.5 rounded-2xl shadow-[inset_2px_2px_5px_#d9d0c4,_inset_-2px_-2px_5px_#ffffff]">
-                <div className="w-8 h-8 bg-[#e5ddd2] rounded-xl shadow-[2px_2px_4px_#d9d0c4,_-2px_-2px_4px_#ffffff] flex items-center justify-center text-sm font-bold text-[#5c4b3a]">
+              <div className="flex items-center gap-3 bg-[#f5f0e8] px-3 py-1.5 rounded-2xl">
+                <div className="w-8 h-8 bg-[#e5ddd2] rounded-xl flex items-center justify-center text-sm font-bold text-[#5c4b3a]">
                   {user.username?.[0]?.toUpperCase() || "U"}
                 </div>
                 <span className="text-[#5c4b3a] font-medium text-sm hidden sm:block">
@@ -136,9 +147,11 @@ export default function Navbar() {
 
               <button
                 onClick={logout}
-                className="px-4 py-2 rounded-xl bg-[#f5f0e8] text-[#5c4b3a] text-sm font-medium shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] hover:shadow-[inset_4px_4px_8px_#d9d0c4,_inset_-4px_-4px_8px_#ffffff] transition-all duration-200"
+                className="px-4 py-2 rounded-xl bg-[#f5f0e8] text-[#5c4b3a] text-sm font-medium transition-all duration-200 flex items-center justify-center"
               >
-                🚪
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                  <path d="M10 17l5-4-5-4v8zm9-13H5c-1.1 0-2 .9-2 2v4h2V6h14v12H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
+                </svg>
               </button>
             </>
           )}
@@ -157,13 +170,15 @@ export default function Navbar() {
         <div className="p-6 border-b border-[#e5ddd2]">
           <div className="flex justify-between items-center mb-6">
             <div className="w-12 h-12 bg-[#f5f0e8] rounded-2xl shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] flex items-center justify-center">
-              <span className="text-2xl">📰</span>
+              <span className="text-2xl">📰 </span>
             </div>
             <button 
               onClick={() => setOpen(false)}
-              className="w-9 h-9 bg-[#f5f0e8] rounded-xl shadow-[3px_3px_6px_#d9d0c4,_-3px_-3px_6px_#ffffff] hover:shadow-[inset_3px_3px_6px_#d9d0c4,_inset_-3px_-3px_6px_#ffffff] transition-all duration-200 text-[#5c4b3a] text-lg"
+              className="w-9 h-9 bg-[#f5f0e8] rounded-xl shadow-[3px_3px_6px_#d9d0c4,_-3px_-3px_6px_#ffffff] hover:shadow-[inset_3px_3px_6px_#d9d0c4,_inset_-3px_-3px_6px_#ffffff] transition-all duration-200 text-[#5c4b3a] flex items-center justify-center"
             >
-              ✕
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <path d="M18.3 5.71L12 12.01 5.71 5.71 4.29 7.12 10.59 13.41 4.29 19.71 5.71 21.12 12 14.83 18.29 21.12 19.71 19.71 13.41 13.41 19.71 7.12z"/>
+              </svg>
             </button>
           </div>
           <h2 className="text-xl font-bold text-[#5c4b3a]">Menu</h2>
@@ -177,7 +192,9 @@ export default function Navbar() {
             className="flex items-center gap-3 p-3 rounded-xl text-[#5c4b3a] font-medium hover:bg-[#f5f0e8] hover:shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] transition-all duration-200 group"
             onClick={() => setOpen(false)}
           >
-            <span className="text-xl group-hover:scale-110 transition-transform">🏠</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 group-hover:scale-110 transition-transform">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
             <span>Trang chủ</span>
           </Link>
 
@@ -186,7 +203,9 @@ export default function Navbar() {
             className="flex items-center gap-3 p-3 rounded-xl text-[#5c4b3a] font-medium hover:bg-[#f5f0e8] hover:shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] transition-all duration-200 group"
             onClick={() => setOpen(false)}
           >
-            <span className="text-xl group-hover:scale-110 transition-transform">👤</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 group-hover:scale-110 transition-transform">
+              <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+            </svg>
             <span>Profile</span>
           </Link>
 
@@ -195,7 +214,9 @@ export default function Navbar() {
             className="flex items-center gap-3 p-3 rounded-xl text-[#5c4b3a] font-medium hover:bg-[#f5f0e8] hover:shadow-[4px_4px_8px_#d9d0c4,_-4px_-4px_8px_#ffffff] transition-all duration-200 group"
             onClick={() => setOpen(false)}
           >
-            <span className="text-xl group-hover:scale-110 transition-transform">📜</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 group-hover:scale-110 transition-transform">
+              <path d="M6 2h9a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v13h9V4H6zm11 0h2v6h-2V4zm0 8h2v2h-2v-2z"/>
+            </svg>
             <span>Lịch sử</span>
           </Link>
         </div>
@@ -213,9 +234,11 @@ export default function Navbar() {
               </div>
               <button
                 onClick={logout}
-                className="px-3 py-1.5 rounded-lg bg-[#f5f0e8] text-sm text-[#5c4b3a] shadow-[2px_2px_4px_#d9d0c4,_-2px_-2px_4px_#ffffff] hover:shadow-[inset_2px_2px_4px_#d9d0c4,_inset_-2px_-2px_4px_#ffffff] transition-all duration-200"
+                className="px-3 py-1.5 rounded-lg bg-[#f5f0e8] text-sm text-[#5c4b3a] shadow-[2px_2px_4px_#d9d0c4,_-2px_-2px_4px_#ffffff] hover:shadow-[inset_2px_2px_4px_#d9d0c4,_inset_-2px_-2px_4px_#ffffff] transition-all duration-200 flex items-center justify-center"
               >
-                🚪
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <path d="M10 17l5-4-5-4v8zm9-13H5c-1.1 0-2 .9-2 2v4h2V6h14v12H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
+                </svg>
               </button>
             </div>
           </div>

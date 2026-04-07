@@ -60,7 +60,7 @@ export default function Login() {
       // Show success message
       const successMessage = document.createElement("div");
       successMessage.className = "fixed top-4 right-4 bg-[#5c8b6e] text-white px-4 py-2 rounded-lg shadow-lg z-50";
-      successMessage.innerText = "✅ Đăng nhập thành công!";
+      successMessage.innerText = "Đăng nhập thành công!";
       document.body.appendChild(successMessage);
       setTimeout(() => successMessage.remove(), 2000);
 
@@ -88,7 +88,9 @@ export default function Login() {
             {/* Header */}
             <div className="text-center mb-6">
               <div className="inline-block p-3 bg-[#f0ebe2] rounded-xl shadow-[4px_4px_8px_#cdc4b8,_-4px_-4px_8px_#fffff0] mb-3">
-                <span className="text-3xl">🔐</span>
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-[#5c4b3a]">
+                  <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm3 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                </svg>
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-[#5c4b3a]">
                 Đăng nhập
@@ -109,7 +111,9 @@ export default function Login() {
                   className="mb-4 p-3 bg-[#f0ebe2] rounded-xl shadow-[inset_5px_5px_10px_#cdc4b8,_inset_-5px_-5px_10px_#fffff0]"
                 >
                   <p className="text-[#b85c4a] text-sm flex items-center gap-2">
-                    <span>⚠️</span> {error}
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                      <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                    </svg> {error}
                   </p>
                 </motion.div>
               )}
@@ -154,7 +158,15 @@ export default function Login() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#7e6b58] hover:text-[#5c4b3a] transition-colors"
                   >
-                    {showPassword ? "👁️" : "👁️‍🗨️"}
+                    {showPassword ? (
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                        <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92 1.11-1.11c1.73-4.39 6-7.5 11-7.5-1.55 0-2.91.43-4.07 1.17L16.17 9.9C15.74 9.32 14.91 9 14 9c-2.76 0-5 2.24-5 5 0 .91.32 1.74.9 2.17l-2.92-2.92C7.13 13.26 7 12.65 7 12c0-2.76 2.24-5 5-5zM2.81 2.81L1.39 4.22l2.27 2.27C2.61 7.08 2 9.3 2 12c0 2.7.67 5.17 1.84 7.38l1.11-1.11c-1.03-1.89-1.64-4.07-1.64-6.27 0-2.2.61-4.38 1.64-6.27L2.81 2.81zM12 17c-2.76 0-5-2.24-5-5 0-.65.13-1.26.36-1.83l2.92 2.92c.44.58 1.27.9 2.17.9 1.66 0 3-1.34 3-3 0-.91-.32-1.74-.9-2.17l2.92 2.92C16.87 10.74 17 11.35 17 12c0 2.76-2.24 5-5 5z"/>
+                      </svg>
+                    )}
                   </button>
                 </div>
               </div>
@@ -191,7 +203,12 @@ export default function Login() {
                     Đang đăng nhập...
                   </span>
                 ) : (
-                  "🔑 Đăng nhập"
+                  <span className="flex items-center justify-center gap-2">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                      <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                    </svg>
+                    Đăng nhập
+                  </span>
                 )}
               </motion.button>
             </form>

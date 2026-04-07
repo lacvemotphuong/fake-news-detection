@@ -70,7 +70,7 @@ export default function Register() {
       // Show success message
       const successMessage = document.createElement("div");
       successMessage.className = "fixed top-4 right-4 bg-[#5c8b6e] text-white px-4 py-2 rounded-lg shadow-lg z-50";
-      successMessage.innerText = "✅ Đăng ký thành công! Vui lòng đăng nhập.";
+      successMessage.innerText = "Đăng ký thành công! Vui lòng đăng nhập.";
       document.body.appendChild(successMessage);
       setTimeout(() => successMessage.remove(), 3000);
 
@@ -98,7 +98,9 @@ export default function Register() {
             {/* Header */}
             <div className="text-center mb-6">
               <div className="inline-block p-3 bg-[#f0ebe2] rounded-xl shadow-[4px_4px_8px_#cdc4b8,_-4px_-4px_8px_#fffff0] mb-3">
-                <span className="text-3xl">📝</span>
+                <svg viewBox="0 0 24 24" className="w-8 h-8 text-[#5c4b3a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 4h16v4H4zm0 6h16v10H4z" />
+                </svg>
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-[#5c4b3a]">
                 Đăng ký tài khoản
@@ -119,7 +121,9 @@ export default function Register() {
                   className="mb-4 p-3 bg-[#f0ebe2] rounded-xl shadow-[inset_5px_5px_10px_#cdc4b8,_inset_-5px_-5px_10px_#fffff0]"
                 >
                   <p className="text-[#b85c4a] text-sm flex items-center gap-2">
-                    <span>⚠️</span> {error}
+                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2L2 20h20L12 2zm0 5.5c.83 0 1.5.67 1.5 1.5S12.83 10.5 12 10.5 10.5 9.83 10.5 9 11.17 7.5 12 7.5zm1 9.5h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                    </svg> {error}
                   </p>
                 </motion.div>
               )}
@@ -186,7 +190,16 @@ export default function Register() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#7e6b58]"
                   >
-                    {showPassword ? "👁️" : "👁️‍🗨️"}
+                    {showPassword ? (
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4.5c-4.97 0-9 3.58-9 8.5s4.03 8.5 9 8.5 9-3.58 9-8.5-4.03-8.5-9-8.5zm0 15c-3.58 0-6.5-2.58-6.5-6.5S8.42 6.5 12 6.5 18.5 9.08 18.5 13 15.58 19.5 12 19.5z" />
+                        <path d="M12 8.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4.5C7.03 4.5 3 7.58 1.5 12c1.5 4.42 5.53 7.5 10.5 7.5 1.4 0 2.74-.26 3.99-.74l1.69 1.69 1.41-1.41-1.72-1.72A9.028 9.028 0 0 0 21 12c-1.5-4.42-5.53-7.5-10.5-7.5zm0 13c-3.58 0-6.5-2.58-6.5-6.5 0-1.54.56-2.96 1.49-4.04l9.05 9.05A6.426 6.426 0 0 1 12 17.5zm5.01 2.1l-1.41 1.41L14.18 17a8.957 8.957 0 0 0 3.94-1.78l.89.88zm-1.85-2.12l-1.38-1.38A4.5 4.5 0 0 1 12 16.5c-.85 0-1.65-.25-2.33-.68l-1.38-1.38A6.49 6.49 0 0 0 12 17.5c1.76 0 3.37-.71 4.51-1.86z" />
+                      </svg>
+                    )}
                   </button>
                 </div>
                 {password && password.length < 6 && (
@@ -196,7 +209,9 @@ export default function Register() {
                 )}
                 {password && password.length >= 6 && (
                   <p className="text-[#5c8b6e] text-xs mt-1 flex items-center gap-1">
-                    <span>✓</span> Mật khẩu hợp lệ
+                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 16.17l-4.88-4.88L3.7 12.7 9 18l12-12-1.41-1.41z" />
+                    </svg> Mật khẩu hợp lệ
                   </p>
                 )}
               </div>
@@ -220,7 +235,16 @@ export default function Register() {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#7e6b58]"
                   >
-                    {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
+                    {showConfirmPassword ? (
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4.5c-4.97 0-9 3.58-9 8.5s4.03 8.5 9 8.5 9-3.58 9-8.5-4.03-8.5-9-8.5zm0 15c-3.58 0-6.5-2.58-6.5-6.5S8.42 6.5 12 6.5 18.5 9.08 18.5 13 15.58 19.5 12 19.5z" />
+                        <path d="M12 8.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4.5C7.03 4.5 3 7.58 1.5 12c1.5 4.42 5.53 7.5 10.5 7.5 1.4 0 2.74-.26 3.99-.74l1.69 1.69 1.41-1.41-1.72-1.72A9.028 9.028 0 0 0 21 12c-1.5-4.42-5.53-7.5-10.5-7.5zm0 13c-3.58 0-6.5-2.58-6.5-6.5 0-1.54.56-2.96 1.49-4.04l9.05 9.05A6.426 6.426 0 0 1 12 17.5zm5.01 2.1l-1.41 1.41L14.18 17a8.957 8.957 0 0 0 3.94-1.78l.89.88zm-1.85-2.12l-1.38-1.38A4.5 4.5 0 0 1 12 16.5c-.85 0-1.65-.25-2.33-.68l-1.38-1.38A6.49 6.49 0 0 0 12 17.5c1.76 0 3.37-.71 4.51-1.86z" />
+                      </svg>
+                    )}
                   </button>
                 </div>
                 {confirmPassword && password !== confirmPassword && (
@@ -230,7 +254,9 @@ export default function Register() {
                 )}
                 {confirmPassword && password === confirmPassword && password.length >= 6 && (
                   <p className="text-[#5c8b6e] text-xs mt-1 flex items-center gap-1">
-                    <span>✓</span> Mật khẩu xác nhận chính xác
+                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 16.17l-4.88-4.88L3.7 12.7 9 18l12-12-1.41-1.41z" />
+                    </svg> Mật khẩu xác nhận chính xác
                   </p>
                 )}
               </div>
@@ -256,7 +282,12 @@ export default function Register() {
                     Đang đăng ký...
                   </span>
                 ) : (
-                  "📝 Đăng ký"
+                  <span className="flex items-center justify-center gap-2">
+                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 4h16v4H4zm0 6h16v10H4z" />
+                    </svg>
+                    Đăng ký
+                  </span>
                 )}
               </motion.button>
             </form>

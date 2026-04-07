@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # biến toàn cục để lưu model, vectorizer, dataset và tfidf matrix, tránh load lại nhiều lần khi predict nhiều lần
 tfidf_vectorizer = None
-tfidf_models = {}   # ✅ sửa: lưu nhiều model
+tfidf_models = {}   
 tokenizer = None
 phobert_model = None
 dataset = None
@@ -23,7 +23,7 @@ tfidf_matrix = None
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# load tfidf model va vectorizer
+# load tfidf vectorizer và các model tfidf
 try:
 
     vec_path = os.path.join(BASE_DIR, "vectorizer.pkl")

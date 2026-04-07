@@ -1,6 +1,7 @@
-const API_URL = "http://localhost:5000/api";
 
-export const api = {
+const API_URL = "http://localhost:5000/api"; 
+
+export const api = { 
 
   async getProfile() {
     const res = await fetch(`${API_URL}/user/profile`, {

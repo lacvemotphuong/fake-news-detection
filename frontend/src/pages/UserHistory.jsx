@@ -77,7 +77,10 @@ export default function UserHistory() {
           onClick={() => navigate("/")}
           className="mb-6 px-5 py-2 bg-[#f0ebe2] text-[#5c4b3a] rounded-xl shadow-[6px_6px_12px_#cdc4b8,_-6px_-6px_12px_#fffff0] hover:shadow-[inset_6px_6px_12px_#cdc4b8,_inset_-6px_-6px_12px_#fffff0] transition-all duration-200 font-medium flex items-center gap-2 w-fit"
         >
-          <span>←</span> Quay lại
+          <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+          </svg>
+          Quay lại
         </motion.button>
 
         {/* Header */}
@@ -89,7 +92,9 @@ export default function UserHistory() {
         >
           <div className="bg-[#f0ebe2] p-6 rounded-2xl shadow-[12px_12px_24px_#cdc4b8,_-12px_-12px_24px_#fffff0]">
             <h2 className="text-2xl md:text-3xl font-bold text-[#5c4b3a] flex items-center gap-2 mb-2">
-              <span>🔎</span>
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#5c4b3a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l4.25 4.25 1.49-1.49L15.5 14zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z" />
+              </svg>
               Lịch sử tra cứu
             </h2>
             <div className="h-0.5 w-20 bg-[#cdc4b8] rounded-full"></div>
@@ -108,7 +113,10 @@ export default function UserHistory() {
         >
           <div className="bg-[#f0ebe2] rounded-2xl shadow-[12px_12px_24px_#cdc4b8,_-12px_-12px_24px_#fffff0] p-6 text-center">
             <p className="text-[#7e6b58] text-sm mb-2 flex items-center justify-center gap-1">
-              <span>📊</span> Tổng lịch sử
+              <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#7e6b58]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 3h3v18H5V3zm6 6h3v12h-3V9zm6-4h3v16h-3V5z" />
+              </svg>
+              Tổng lịch sử
             </p>
             <h3 className="text-3xl font-bold text-[#5c4b3a]">
               {history.length}
@@ -117,7 +125,10 @@ export default function UserHistory() {
 
           <div className="bg-[#f0ebe2] rounded-2xl shadow-[12px_12px_24px_#cdc4b8,_-12px_-12px_24px_#fffff0] p-6 text-center">
             <p className="text-[#7e6b58] text-sm mb-2 flex items-center justify-center gap-1">
-              <span>✅</span> Tin thật
+              <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#7e6b58]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+              </svg>
+              Tin thật
             </p>
             <h3 className="text-3xl font-bold text-[#5c8b6e]">
               {realCount}
@@ -126,7 +137,10 @@ export default function UserHistory() {
 
           <div className="bg-[#f0ebe2] rounded-2xl shadow-[12px_12px_24px_#cdc4b8,_-12px_-12px_24px_#fffff0] p-6 text-center">
             <p className="text-[#7e6b58] text-sm mb-2 flex items-center justify-center gap-1">
-              <span>⚠️</span> Tin giả
+              <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#7e6b58]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+              </svg>
+              Tin giả
             </p>
             <h3 className="text-3xl font-bold text-[#b85c4a]">
               {fakeCount}
@@ -166,16 +180,21 @@ export default function UserHistory() {
               className="bg-[#f0ebe2] rounded-2xl shadow-[20px_20px_40px_#cdc4b8,_-20px_-20px_40px_#fffff0] p-8 text-center"
             >
               <div className="inline-block p-3 bg-[#f0ebe2] rounded-xl shadow-[inset_5px_5px_10px_#cdc4b8,_inset_-5px_-5px_10px_#fffff0] mb-3">
-                <span className="text-3xl">⚠️</span>
+                <svg viewBox="0 0 24 24" className="w-8 h-8 text-[#f59e0b]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 20h20L12 2zm0 5.5c.83 0 1.5.67 1.5 1.5S12.83 10.5 12 10.5 10.5 9.83 10.5 9 11.17 7.5 12 7.5zm1 9.5h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                </svg>
               </div>
               <p className="text-[#b85c4a] font-medium mb-4">{error}</p>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={fetchHistory}
-                className="px-6 py-2 bg-[#f0ebe2] text-[#5c4b3a] rounded-xl shadow-[6px_6px_12px_#cdc4b8,_-6px_-6px_12px_#fffff0] hover:shadow-[inset_6px_6px_12px_#cdc4b8,_inset_-6px_-6px_12px_#fffff0] transition-all duration-200 font-medium"
+                className="px-6 py-2 bg-[#f0ebe2] text-[#5c4b3a] rounded-xl shadow-[6px_6px_12px_#cdc4b8,_-6px_-6px_12px_#fffff0] hover:shadow-[inset_6px_6px_12px_#cdc4b8,_inset_-6px_-6px_12px_#fffff0] transition-all duration-200 font-medium flex items-center gap-2 justify-center"
               >
-                🔄 Thử lại
+                <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 .74-.14 1.44-.38 2.08l1.48 1.12C19.79 13.4 20 12.72 20 12c0-4.42-3.58-8-8-8zm-6.38 4.08C4.21 10.6 4 11.28 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6 0-.74.14-1.44.38-2.08z" />
+                </svg>
+                Thử lại
               </motion.button>
             </motion.div>
           )}
@@ -192,7 +211,9 @@ export default function UserHistory() {
             {history.length === 0 ? (
               <div className="p-12 text-center">
                 <div className="inline-block p-4 bg-[#f0ebe2] rounded-2xl shadow-[inset_6px_6px_12px_#cdc4b8,_inset_-6px_-6px_12px_#fffff0] mb-4">
-                  <span className="text-5xl">📭</span>
+                  <svg viewBox="0 0 24 24" className="w-10 h-10 text-[#5c4b3a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 8h-8V4H4v16h16V8zm-2 0v10H6V6h8v4h4z" />
+                  </svg>
                 </div>
                 <h3 className="text-xl font-bold text-[#5c4b3a] mb-2">Chưa có lịch sử tra cứu</h3>
                 <p className="text-[#7e6b58]">

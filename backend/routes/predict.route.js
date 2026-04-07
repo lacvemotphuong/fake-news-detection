@@ -1,3 +1,4 @@
+// routes/predict.route.js
 const express = require("express");
 const { spawn } = require("child_process");
 const path = require("path");
@@ -113,17 +114,17 @@ router.post("/", async (req, res) => {
 });
 
 // // GET /history - Lấy lịch sử dự đoán (20 bản ghi gần nhất)
-// router.get("/history", async (req, res) => {
-//   try {
-//     const history = await Prediction.find()
-//       .sort({ createdAt: -1 })
-//       .limit(20);
+router.get("/history", async (req, res) => {
+  try {
+    const history = await Prediction.find()
+      .sort({ createdAt: -1 })
+      .limit(20);
 
-//     res.json(history);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Không lấy được lịch sử" });
-//   }
-// });
+    res.json(history);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Không lấy được lịch sử" });
+  }
+});
 
 module.exports = router;

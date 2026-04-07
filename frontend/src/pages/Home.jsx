@@ -70,8 +70,11 @@ export default function Home() {
           className="text-center mb-10"
         >
           <div className="inline-block bg-[#f0ebe2] p-6 rounded-3xl shadow-[12px_12px_24px_#cdc4b8,_-12px_-12px_24px_#fffff0]">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#5c4b3a] mb-2">
-              📰 Fake News Detector
+            <h1 className="text-4xl md:text-5xl font-bold text-[#5c4b3a] mb-2 flex items-center justify-center gap-3">
+              {/* <svg viewBox="0 0 24 24" className="w-10 h-10 text-[#5c4b3a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4h16v4H4zm0 6h16v10H4z" />
+              </svg> */}
+              Fake News Detector
             </h1>
             <div className="h-0.5 w-24 mx-auto bg-[#cdc4b8] rounded-full"></div>
           </div>
@@ -92,15 +95,19 @@ export default function Home() {
             {/* Header with clear button */}
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-xl md:text-2xl font-bold text-[#5c4b3a] flex items-center gap-2">
-                <span>📝</span>
+                <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#5c4b3a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 4h12l4 4v12H4zM14 6.5L17.5 10H14z" />
+                </svg>
                 Nội dung cần kiểm tra
               </h2>
               {text && (
                 <button
                   onClick={clearText}
-                  className="w-8 h-8 bg-[#f0ebe2] rounded-xl shadow-[3px_3px_6px_#cdc4b8,_-3px_-3px_6px_#fffff0] hover:shadow-[inset_3px_3px_6px_#cdc4b8,_inset_-3px_-3px_6px_#fffff0] transition-all duration-200 text-[#7e6b58] text-lg"
+                  className="w-8 h-8 bg-[#f0ebe2] rounded-xl shadow-[3px_3px_6px_#cdc4b8,_-3px_-3px_6px_#fffff0] hover:shadow-[inset_3px_3px_6px_#cdc4b8,_inset_-3px_-3px_6px_#fffff0] transition-all duration-200 text-[#7e6b58] flex items-center justify-center"
                 >
-                  ✕
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.3 5.71l-1.41-1.41L12 9.59 7.11 4.7 5.7 6.11 10.59 11 5.7 15.89l1.41 1.41L12 12.41l4.89 4.89 1.41-1.41L13.41 11z" />
+                  </svg>
                 </button>
               )}
             </div>
@@ -117,19 +124,26 @@ export default function Home() {
             {/* Controls */}
             <div className="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex items-center gap-3">
-                <span className="font-medium text-[#5c4b3a] text-sm md:text-base">🤖 Chọn mô hình:</span>
+                <span className="font-medium text-[#5c4b3a] text-sm md:text-base flex items-center gap-2">
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#5c4b3a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7h14v10H5zM7 9v6h10V9H7z" />
+                  </svg>
+                  Chọn mô hình:
+                </span>
                 <div className="relative">
                   <select
                     value={modelType}
                     onChange={(e) => setModelType(e.target.value)}
                     className="appearance-none bg-[#f0ebe2] rounded-xl px-4 py-2 pr-8 cursor-pointer shadow-[3px_3px_6px_#cdc4b8,_-3px_-3px_6px_#fffff0] focus:outline-none text-[#5c4b3a] text-sm md:text-base"
                   >
-                    <option value="both">🎯 Cả hai (PhoBERT + TF-IDF)</option>
-                    <option value="phobert">🧠 PhoBERT</option>
-                    <option value="tfidf">📊 TF-IDF</option>
+                      <option value="both">Cả hai (PhoBERT + TF-IDF)</option>
+                      <option value="phobert">PhoBERT</option>
+                      <option value="tfidf">TF-IDF</option>
                   </select>
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-[#7e6b58] text-xs">
-                    ▼
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-[#7e6b58]">
+                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 10l5 5 5-5H7z" />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -150,7 +164,9 @@ export default function Home() {
                 >
                   <div className="p-3 bg-[#f0ebe2] rounded-xl shadow-[inset_5px_5px_10px_#cdc4b8,_inset_-5px_-5px_10px_#fffff0]">
                     <p className="text-[#b85c4a] text-sm flex items-center gap-2">
-                      <span>⚠️</span> {error}
+                      <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 20h20L12 2zm0 5.5c.83 0 1.5.67 1.5 1.5S12.83 10.5 12 10.5 10.5 9.83 10.5 9 11.17 7.5 12 7.5zm1 9.5h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                      </svg> {error}
                     </p>
                   </div>
                 </motion.div>
@@ -179,7 +195,12 @@ export default function Home() {
                     Đang phân tích...
                   </span>
                 ) : (
-                  "🔍 Phân tích ngay"
+                  <span className="flex items-center justify-center gap-2">
+                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l4.25 4.25 1.49-1.49L15.5 14zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z" />
+                    </svg>
+                    Phân tích ngay
+                  </span>
                 )}
               </motion.button>
             </div>
@@ -196,7 +217,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="mt-8"
             >
-              <div className="bg-[#f0ebe2] rounded-3xl shadow-[20px_20px_40px_#cdc4b8,_-20px_-20px_40px_#fffff0] overflow-hidden">
+              <div className="bg-[#f0ebe2] rounded-3xl overflow-hidden">
                 <div className="p-6 md:p-8 space-y-6">
                   
                   {/* Result Header */}
@@ -209,7 +230,15 @@ export default function Home() {
                     >
                       <div className="p-4 bg-[#f0ebe2] rounded-2xl shadow-[6px_6px_12px_#cdc4b8,_-6px_-6px_12px_#fffff0] mb-4">
                         <span className="text-5xl">
-                          {result.label === "FAKE" ? "🚨" : "✅"}
+                          {result.label === "FAKE" ? (
+                            <svg viewBox="0 0 24 24" className="w-12 h-12 text-[#b85c4a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M12 2L2 20h20L12 2zm0 16a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm-1-10h2v5h-2V8z" />
+                            </svg>
+                          ) : (
+                            <svg viewBox="0 0 24 24" className="w-12 h-12 text-[#5c8b6e]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M9 16.17L4.83 12l-1.41 1.41L9 19 21 7l-1.41-1.41z" />
+                            </svg>
+                          )}
                         </span>
                       </div>
                     </motion.div>
@@ -232,7 +261,7 @@ export default function Home() {
                   <div className="space-y-4">
                     <div>
                       <div className="flex justify-between text-sm font-semibold mb-2">
-                        <span className="text-[#b85c4a]">⚠️ Tin giả</span>
+                        <span className="text-[#b85c4a] flex items-center gap-2"><svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 20h20L12 2zm0 5.5c.83 0 1.5.67 1.5 1.5S12.83 10.5 12 10.5 10.5 9.83 10.5 9 11.17 7.5 12 7.5zm1 9.5h-2v-2h2v2zm0-4h-2v-4h2v4z" /></svg> Tin giả</span>
                         <span className="text-[#b85c4a]">{fakePercent}%</span>
                       </div>
                       <div className="h-3 bg-[#e0d8ce] rounded-full shadow-[inset_2px_2px_4px_#cdc4b8,_inset_-2px_-2px_4px_#fffff0]">
@@ -247,7 +276,7 @@ export default function Home() {
 
                     <div>
                       <div className="flex justify-between text-sm font-semibold mb-2">
-                        <span className="text-[#5c8b6e]">✓ Tin thật</span>
+                        <span className="text-[#5c8b6e] flex items-center gap-2"><svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.41 1.41L9 19 21 7l-1.41-1.41z" /></svg> Tin thật</span>
                         <span className="text-[#5c8b6e]">{realPercent}%</span>
                       </div>
                       <div className="h-3 bg-[#e0d8ce] rounded-full shadow-[inset_2px_2px_4px_#cdc4b8,_inset_-2px_-2px_4px_#fffff0]">
@@ -270,14 +299,18 @@ export default function Home() {
                       className="pt-4 border-t border-[#e0d8ce]"
                     >
                       <h3 className="font-semibold text-[#5c4b3a] mb-3 flex items-center gap-2 text-sm">
-                        <span>🔬</span> Chi tiết phân tích từng mô hình
+                        <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#5c4b3a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6 22h12v-2H6v2zm10.93-7.36l-1.1-1.1c.52-.99.82-2.17.82-3.44 0-3.48-2.82-6.3-6.3-6.3S3.15 7.72 3.15 11.2c0 3.48 2.82 6.3 6.3 6.3 1.27 0 2.45-.3 3.44-.82l1.1 1.1 1.41-1.41zM9.45 15.55A4.92 4.92 0 0 1 5.15 11.2 4.92 4.92 0 0 1 9.45 6.9 4.92 4.92 0 0 1 13.75 11.2c0 1.32-.51 2.52-1.41 3.41l-2.89 2.89a.996.996 0 1 1-1.41-1.41l2.89-2.89z" />
+                        </svg> Chi tiết phân tích từng mô hình
                       </h3>
                       
                       <div className="grid gap-3 md:grid-cols-2">
                         {result.details?.phobert && (
                           <div className="p-3 bg-[#f0ebe2] rounded-xl shadow-[inset_4px_4px_8px_#cdc4b8,_inset_-4px_-4px_8px_#fffff0]">
                             <div className="flex items-center gap-2 mb-2">
-                              <span className="text-xl">🧠</span>
+                              <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#5c4b3a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2a10 10 0 0 0-7.07 17.07A9.92 9.92 0 0 0 12 22a9.92 9.92 0 0 0 7.07-2.93A10 10 0 0 0 12 2zm0 2a8 8 0 0 1 8 8c0 1.38-.35 2.68-.96 3.82L12 13V6zm-6.04 8a8 8 0 0 1 12.08 0A7.94 7.94 0 0 1 12 20a7.94 7.94 0 0 1-6.04-4z" />
+                              </svg>
                               <h4 className="font-bold text-[#5c4b3a] text-sm">PhoBERT</h4>
                             </div>
                             <p className="text-xs text-[#7e6b58] mb-2">
@@ -314,7 +347,9 @@ export default function Home() {
                                 className="p-3 bg-[#f0ebe2] rounded-xl shadow-[inset_4px_4px_8px_#cdc4b8,_inset_-4px_-4px_8px_#fffff0]"
                               >
                                 <div className="flex items-center gap-2 mb-2">
-                                  <span className="text-xl">📊</span>
+                                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#5c4b3a]" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 20h3V10H5v10zm6 0h3V4h-3v16zm6 0h3V14h-3v6z" />
+                                  </svg>
                                   <h4 className="font-bold text-[#5c4b3a] text-sm">{name.toUpperCase()}</h4>
                                 </div>
                                 <p className="text-xs text-[#7e6b58] mb-2">
